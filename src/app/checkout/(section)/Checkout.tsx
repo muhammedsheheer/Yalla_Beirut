@@ -142,14 +142,14 @@ const Checkout = () => {
 
   return (
     <section className="flex h-full w-full items-center justify-center bg-menubackground">
-      <div className="flex h-full w-full max-w-[1300px] flex-col gap-[2.5rem] px-3 pt-3 md:pt-[2.5rem] pb-[2.5rem]">
+      <div className="flex h-full w-full max-w-[1300px] flex-col gap-[2.5rem] px-3 pb-[2.5rem] pt-3 md:pt-[2.5rem]">
         <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:gap-28">
           <Tabs
             defaultValue="pickup"
             className="flex w-full flex-col gap-4 lg:w-2/3"
           >
             <Button
-              className="w-fit p-0 text-menusecondary text-lg font-[500] tracking-[1px] hidden md:flex gap-2"
+              className="hidden w-fit gap-2 p-0 text-lg font-[500] tracking-[1px] text-menusecondary md:flex"
               onClick={() => router.back()}
               variant="link"
             >
@@ -178,17 +178,16 @@ const Checkout = () => {
             </div>
             <TabsContent value="pickup">
               {!restaurant?.isTakeAwayEnabled ? (
-                <p>Pickup is unavailable at the moment.</p >
-
+                <p>Pickup is unavailable at the moment.</p>
               ) : !isPickupNow ? (
-                <p>Pickup is unavailable at the moment.</p >
+                <p>Pickup is unavailable at the moment.</p>
               ) : restaurant?.minimumCollectionOrderAmount &&
                 restaurant?.minimumCollectionOrderAmount >
-                cartValue() +
-                calculateServiceCharge(
-                  cartValue(),
-                  restaurant?.serviceCharge ?? 0,
-                ) ? (
+                  cartValue() +
+                    calculateServiceCharge(
+                      cartValue(),
+                      restaurant?.serviceCharge ?? 0,
+                    ) ? (
                 <p>
                   The total amount must be greater than{" "}
                   {restaurant?.minimumCollectionOrderAmount}.
@@ -199,16 +198,16 @@ const Checkout = () => {
             </TabsContent>
             <TabsContent value="delivery">
               {!restaurant?.isDeliveryEnabled ? (
-                <p>Delivery is unavailable at the moment.</p >
+                <p>Delivery is unavailable at the moment.</p>
               ) : !isDeliveryNow ? (
-                <p>Delivery is unavailable at the moment.</p >
+                <p>Delivery is unavailable at the moment.</p>
               ) : restaurant?.minimumDeliveryOrderAmount &&
                 restaurant?.minimumDeliveryOrderAmount >
-                cartValue() +
-                calculateServiceCharge(
-                  cartValue(),
-                  restaurant?.serviceCharge ?? 0,
-                ) ? (
+                  cartValue() +
+                    calculateServiceCharge(
+                      cartValue(),
+                      restaurant?.serviceCharge ?? 0,
+                    ) ? (
                 <p>
                   The total amount must be greater than{" "}
                   {restaurant?.minimumDeliveryOrderAmount}.
@@ -219,10 +218,12 @@ const Checkout = () => {
             </TabsContent>
           </Tabs>
 
-          <div className="flex w-full flex-col justify-end gap-3 lg:w-1/3 lg:flex-row mb-16 md:mb-0">
+          <div className="mb-16 flex w-full flex-col justify-end gap-3 md:mb-0 lg:w-1/3 lg:flex-row">
             <div className="flex h-fit w-full flex-col gap-7 rounded-md md:border-[2px] md:border-borderinput md:px-4 md:py-5">
               <div className="w-full">
-                <p className="text-xl font-[600] tracking-[0.6px] text-menuprimary-foreground">Order Summary</p>
+                <p className="text-xl font-[600] tracking-[0.6px] text-menuprimary-foreground">
+                  Order Summary
+                </p>
               </div>
               <div className="flex flex-col">
                 <div className="custom-scrollbar flex max-h-[300px] w-full flex-col overflow-x-auto overflow-y-scroll">
@@ -264,7 +265,7 @@ const Checkout = () => {
                             )?.name;
                             return (
                               <div key={mod._idMenuItem}>
-                                <p>1 X {modifier ? modifier : ""}</p>
+                                <p>1 X {modifier ?? ""}</p>
                               </div>
                             );
                           })}
@@ -285,16 +286,22 @@ const Checkout = () => {
                   ))}
                 </div>
                 <div className="flex flex-col gap-4 pt-6">
-                  <p className="text-lg font-light text-menuprimary-foreground">Rewards & promos</p>
+                  <p className="text-lg font-light text-menuprimary-foreground">
+                    Rewards & promos
+                  </p>
                   <div className="flex gap-2">
                     <Input
                       placeholder="Gift or discount code"
-                      className="h-12 rounded-none placeholder:text-placeholder border-b-[3px] border-l-0 border-r-0 border-t-0 border-b-borderinput bg-inputbg outline-none focus-visible:border-b-[2px] focus-visible:border-b-menuprimary focus-visible:ring-0"
+                      className="h-12 rounded-none border-b-[3px] border-l-0 border-r-0 border-t-0 border-b-borderinput bg-inputbg outline-none placeholder:text-placeholder focus-visible:border-b-[2px] focus-visible:border-b-menuprimary focus-visible:ring-0"
                     />
-                    <Button className="h-12 text-menuforeground bg-menuprimary hover:bg-buttonhover">Apply</Button>
+                    <Button className="h-12 bg-menuprimary text-menuforeground hover:bg-buttonhover">
+                      Apply
+                    </Button>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-sm font-semibold text-menusecondary">Service Charge</p>
+                    <p className="text-sm font-semibold text-menusecondary">
+                      Service Charge
+                    </p>
                     <p className="text-lg font-semibold text-menusecondary">
                       {getCurrencySymbol("GBP")}{" "}
                       {calculateServiceCharge(
@@ -304,7 +311,9 @@ const Checkout = () => {
                     </p>
                   </div>
                   <div className="flex justify-between">
-                    <p className="text-lg font-semibold text-menusecondary">Total Amount</p>
+                    <p className="text-lg font-semibold text-menusecondary">
+                      Total Amount
+                    </p>
                     <p className="text-lg font-semibold text-menusecondary">
                       {getCurrencySymbol("GBP")}{" "}
                       {(
