@@ -1,72 +1,100 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
+
+const images = [
+  "/images/home/follow/image3.png",
+  "/images/home/follow/image2.png",
+  "/images/home/follow/image3.png",
+  "/images/home/follow/image2.png",
+  "/images/home/follow/image3.png",
+  "/images/home/follow/image2.png",
+  "/images/home/follow/image3.png",
+  "/images/home/follow/image2.png",
+];
 
 const Story: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "prev" | "next") => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const imageWidth = container.firstChild
+        ? (container.firstChild as HTMLElement).clientWidth + 16
+        : 0;
+
+      container.scrollBy({
+        left: direction === "next" ? imageWidth : -imageWidth,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <section className="h-full w-full bg-[#E76100] py-12 lg:py-24">
+    <section className="w-full bg-[#E76100] py-12 lg:py-24">
       <div className="flex flex-col gap-8 lg:gap-10">
-        <h2 className="font-almarose text-center text-4xl font-[700] uppercase text-[#DDD1BD] lg:text-6xl">
+        <h2 className="text-center text-4xl font-bold uppercase text-[#DDD1BD] lg:text-6xl">
           Scroll Our Story
         </h2>
-        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-6">
-          <Image
-            src={"/images/home/follow/image1.png"}
-            width={606}
-            height={723}
-            alt="image"
-            className="hidden h-[300px] w-full object-contain lg:block lg:h-[600px] lg:w-[15%] lg:object-cover"
-          />
-          <Image
-            src={"/images/home/follow/image2.png"}
-            width={606}
-            height={723}
-            alt="image"
-            className="h-[300px] w-full object-contain lg:h-[600px] lg:w-[35%] lg:object-cover"
-          />
-          <Image
-            src={"/images/home/follow/image3.png"}
-            width={606}
-            height={723}
-            alt="image"
-            className="h-[300px] w-full object-contain lg:h-[600px] lg:w-[35%] lg:object-cover"
-          />
-          <div className="w-full lg:w-[15%]">
-            <Image
-              src={"/images/home/follow/image4.png"}
-              width={606}
-              height={723}
-              alt="image"
-              className="hidden h-[300px] w-full rounded-bl-2xl rounded-tl-2xl object-contain lg:block lg:h-[600px] lg:object-cover"
-            />
+
+        <div className="relative w-full overflow-hidden px-4">
+          <div
+            ref={containerRef}
+            className="custom-scrollbar flex gap-4 overflow-x-auto scroll-smooth"
+          >
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className="w-[90%] flex-shrink-0 sm:w-[100%] md:w-[48%] lg:w-[24%]"
+              >
+                <Image
+                  src={image}
+                  width={600}
+                  height={800}
+                  alt={`Story image ${index}`}
+                  className="h-auto w-full rounded-lg object-cover"
+                />
+              </div>
+            ))}
           </div>
         </div>
+
         <div className="flex flex-row items-center justify-center gap-4 lg:gap-10">
           <Image
-            src={"/images/home/follow/lvl.png"}
+            src="/images/home/follow/lvl.png"
             width={101}
             height={101}
-            alt="lvl"
-            className="w-10 lg:w-16"
+            alt="Previous"
+            className="w-10 cursor-pointer lg:w-16"
+            onClick={() => scroll("prev")}
           />
-          <div>
-            <Link
-              className="font-almarose rounded-full bg-transparent px-8 py-5 text-center text-sm font-[400] text-[#DDD1BD] ring-1 ring-[#DDD1BD] lg:px-12 lg:py-6 lg:text-2xl"
-              href=""
-              target="_blank"
-            >
-              @yallabeirut2
-            </Link>
-          </div>
+          <Link
+            className="rounded-full px-8 py-5 text-center text-sm font-bold text-[#DDD1BD] ring-1 ring-[#DDD1BD] lg:px-12 lg:py-6 lg:text-2xl"
+            href="https://www.instagram.com/yallabeirut2/"
+            target="_blank"
+          >
+            @yallabeirut2
+          </Link>
           <Image
-            src={"/images/home/follow/lvr.png"}
+            src="/images/home/follow/lvr.png"
             width={101}
             height={101}
-            alt="lvl"
-            className="w-10 lg:w-16"
+            alt="Next"
+            className="w-10 cursor-pointer lg:w-16"
+            onClick={() => scroll("next")}
           />
         </div>
       </div>
+
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .custom-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 };
