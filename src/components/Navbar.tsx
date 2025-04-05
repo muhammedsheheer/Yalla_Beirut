@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ position = "static" }) => {
           </div>
           <div className="hidden lg:block">
             <Link href={""}>
-              <Button className="flex flex-row gap-2 rounded-full bg-[#fff] px-5 py-6 font-inter text-sm font-[600] uppercase tracking-[1.2px] text-[#FA771F]">
+              <Button className="flex flex-row gap-2 rounded-full bg-[#fff] px-5 py-6 font-inter text-sm font-[600] uppercase tracking-[1.2px] text-[#fff]">
                 Book Table
               </Button>
             </Link>
